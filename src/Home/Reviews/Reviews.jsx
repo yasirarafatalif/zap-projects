@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ReviewsCard from './ReviewsCard';
+import Container from '../../Comeponents/Shared/Container';
 
 const Reviews = () => {
     const [reviewsData, setreviewsData] = useState([])
@@ -13,7 +14,8 @@ const Reviews = () => {
     },[])
     return (
         <>
-      <Swiper
+        <Container>
+             <Swiper
         effect={'coverflow'}
         grabCursor={true}
         loop={true}
@@ -44,6 +46,8 @@ const Reviews = () => {
       
        
       </Swiper>
+        </Container>
+   
     </>
     );
 };
