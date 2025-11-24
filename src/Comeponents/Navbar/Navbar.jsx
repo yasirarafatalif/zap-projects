@@ -42,6 +42,7 @@ const Navbar = () => {
       <li> <NavLink>Services</NavLink></li>
       <li> <NavLink to='/about'>About</NavLink></li>
       <li> <NavLink>Blog</NavLink></li>
+      <li> <NavLink to='/send-percel'>Send A Percel</NavLink></li>
       <li> <NavLink to='/contact'>Contact</NavLink></li>
        
       

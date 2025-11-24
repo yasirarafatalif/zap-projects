@@ -11,6 +11,7 @@ import Register from '../Pages/Register/Register'
 import RiderFrom from '../Home/Rider/RiderFrom'
 import PrivateRoute from './PrivateRoute'
 import UserProfile from '../Home/UserProfile/UserProfile'
+import SendPercel from '../Pages/SendPercel/SendPercel'
 
 export const router = createBrowserRouter([
 
@@ -29,6 +30,9 @@ export const router = createBrowserRouter([
      </PrivateRoute>},
      { path:'/user-profile' , element:<PrivateRoute>
        <UserProfile></UserProfile>
+     </PrivateRoute>},
+     { path:'/send-percel' , element:<PrivateRoute>
+       <SendPercel></SendPercel>
      </PrivateRoute>}
     ]
 
