@@ -25,7 +25,7 @@ const HomeSlider = () => {
           disableOnInteraction: false,
         }}
         modules={[Autoplay]}
-        
+        className='py-6 my-6'
       >
        {
         brans.map((logo, index)=> <SwiperSlide key={index}>

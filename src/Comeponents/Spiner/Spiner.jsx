@@ -4,7 +4,9 @@ import styled from 'styled-components';
 const Spiner = () => {
   return (
     <StyledWrapper>
-      <div className="loader" />
+      <div className='min-h-screen flex justify-center items-center'>
+        <div className="loader" />
+      </div>
     </StyledWrapper>
   );
 }

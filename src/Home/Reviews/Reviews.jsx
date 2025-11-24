@@ -6,7 +6,7 @@ import Container from '../../Comeponents/Shared/Container';
 
 const Reviews = () => {
     const [reviewsData, setreviewsData] = useState([])
-    console.log(reviewsData);
+    // console.log(reviewsData);
     useEffect(()=>{
         fetch('/reviews.json')
         .then( res=> res.json())
