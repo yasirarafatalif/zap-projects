@@ -53,7 +53,8 @@ export const router = createBrowserRouter([
     <DashboardLayout></DashboardLayout>
   </PrivateRoute>,
   children:[
-      {path:'/dashboard' , Component : Mypercel }
+      // {path:'/dashboard' , Component : Mypercel },
+      {path:'/dashboard/mypercel' , Component : Mypercel }
   ]
 }
 ])

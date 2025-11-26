@@ -1,71 +1,96 @@
 import React from 'react';
+import { FaRegEdit } from "react-icons/fa";
+import useAuth from '../../../Hooks/useAuth';
+import useAxios from '../../../Hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
+import { Search, Trash } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const Mypercel = () => {
+    const { user } = useAuth()
+    const axios = useAxios()
+
+    const { data: percel = [], refetch } = useQuery({
+        queryKey: ['/percel', user?.email],
+        queryFn: async () => {
+            const res = await axios.get(`/percel?email=${user?.email}`)
+            // console.log(res.data);
+            return res.data
+
+        }
+    })
+
+    const handelPercelDelete = (id) => {
+        console.log(id);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/percel/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+
+                        if (res.data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+
+                        }
+                        refetch();
+                    })
+
+
+
+            }
+        });
+    }
+
     return (
         <div>
 
-            <div class="min-h-screen bg-gray-100 p-6">
-                <div class="max-w-6xl mx-auto bg-white rounded-xl p-8 shadow-sm">
+            <div className="overflow-x-auto">
+                <table className="table table-zebra">
+                    {/* head */}
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Cost</th>
+                            <th>Delivery Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* row 1 */}
+                        {
+                            percel.map((d, i) => <tr key={d._id}>
+                                <th>{i + 1}</th>
 
-                    {/* <!-- Heading --> */}
-                    <h1 class="text-4xl font-bold text-teal-900 mb-8">
-                        Parcel Details
-                    </h1>
+                                <td>{d?.parcelName}</td>
+                                <td>{d?.cost}</td>
+                                <td>pending</td>
+                                <td >
 
-                    {/* <!-- Sender + Receiver Info --> */}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                        {/* <!-- Sender Info --> */}
-                        <div class="bg-gray-100 p-6 rounded-xl">
-                            <h2 class="text-xl font-semibold mb-4">Sender Info</h2>
+                                    <button className='btn  bg-[#caeb66] hover:bg-primary'>Pay</button>
+                                    <button className='btn mx-2 bg-[#e8f3f4]  '>Edit </button>
+                                    <button
+                                        onClick={() => handelPercelDelete(d._id)}
+                                        className='btn text-red-700 bg-[#fceaea] '>Delete</button>
+                                </td>
+                            </tr>)
+                        }
 
-                            <div class="space-y-2 text-sm">
-                                <p><span class="font-semibold">Name</span> : Zahid Hossain</p>
-                                <p><span class="font-semibold">Phone</span> : +8801758000056</p>
-                                <p><span class="font-semibold">Email</span> : zahid@example.com</p>
-                                <p><span class="font-semibold">Region</span> : Dhaka, Bangladesh</p>
-                                <p><span class="font-semibold">Address</span> : Gulshan Badda Link Rd, Dhaka 1212</p>
-                            </div>
-                        </div>
-
-                        {/* <!-- Receiver Info --> */}
-                        <div class="bg-gray-100 p-6 rounded-xl">
-                            <h2 class="text-xl font-semibold mb-4">Receiver Info</h2>
-
-                            <div class="space-y-2 text-sm">
-                                <p><span class="font-semibold">Name</span> : Zahid Hossain</p>
-                                <p><span class="font-semibold">Phone</span> : +8801758000056</p>
-                                <p><span class="font-semibold">Email</span> : zahid@example.com</p>
-                                <p><span class="font-semibold">Region</span> : Dhaka, Bangladesh</p>
-                                <p><span class="font-semibold">Address</span> : Gulshan Badda Link Rd, Dhaka 1212</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    {/* <!-- Parcel Details --> */}
-                    <div class="bg-gray-100 p-6 rounded-xl mt-6">
-                        <h2 class="text-xl font-semibold mb-4">Parcel details</h2>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 text-sm">
-                            <p><span class="font-semibold">Title</span> : Zahid Hossain</p>
-                            <p><span class="font-semibold">Type</span> : Mango</p>
-
-                            <p><span class="font-semibold">Weight</span> : 5 KG</p>
-                            <p><span class="font-semibold">Charge</span> : Tk 320</p>
-
-                            <p><span class="font-semibold">Status</span> : Pending</p>
-                            <p><span class="font-semibold">Pickup Instruction</span> : N/A</p>
-
-                            <p><span class="font-semibold">Delivery Instruction</span> : N/A</p>
-                            <p><span class="font-semibold">Tracking Number</span> : 25820</p>
-
-                            <p><span class="font-semibold">Pickup OTP</span> : 6345</p>
-                            <p><span class="font-semibold">Delivery OTP</span> : 5555</p>
-                        </div>
-                    </div>
-
-                </div>
+                    </tbody>
+                </table>
             </div>
 
 

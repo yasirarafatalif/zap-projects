@@ -55,7 +55,9 @@ const SendPercel = () => {
                 cost = extraCharge + minCharge
             }
         }
-        console.log('cost', data);
+        data.cost = cost
+        console.log(data);
+        // console.log('cost', data);
         Swal.fire({
             title: "Are you Sure?",
             text:`You Will pay ${cost} Taka`,
