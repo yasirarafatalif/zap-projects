@@ -18,27 +18,22 @@ const Register = () => {
     const handeelRegister = (data) => {
         
         const profileImage= data.image[0];
+        const fromData = new FormData();
+        fromData.append('image',profileImage)
         createUser(data.email, data.password)
             .then(result => {
-                const fromData = new FormData();
-                fromData.append('image',profileImage)
+            
                 
-                const photoimageUrl= `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_API_IMAGE_KEY}`
-                axios.post(photoimageUrl, fromData)
+                // const photoimageUrl= `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_API_IMAGE_KEY}`
+                axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_API_IMAGE_KEY}`, fromData)
                 .then(res=>{
-                    console.log('after log in ', res);
-                    const updateProfile ={
-                        displayName:data.name,
-                        photoURL:res.data.data.url,
-                    }
-                    console.log(updateProfile);
-                  updateUserProfile(updateProfile)
+                  updateUserProfile(data?.name, res?.data?.data?.display_url)
                   .then()
                   .catch(err=>{
-                    console.log(err);
+                    // console.log(err);
                   })
                 })
-                console.log(updateUserProfile);
+                // console.log(updateUserProfile);
                 // setuser(result)
                 toast.success("You Are SuccessFully Create Account")
             })
@@ -46,9 +41,9 @@ const Register = () => {
                 console.log(err);
             })
     }
-    // if(user){
-    //     navigate('/')
-    // }
+    if(user){
+        navigate('/')
+    }
     return (
         <div >
             <div className="w-full max-w-md">

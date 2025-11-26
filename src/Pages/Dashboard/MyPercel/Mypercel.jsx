@@ -5,6 +5,7 @@ import useAxios from '../../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Search, Trash } from 'lucide-react';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router';
 
 const Mypercel = () => {
     const { user } = useAuth()
@@ -80,7 +81,9 @@ const Mypercel = () => {
                                 <td >
 
 
+                                   <Link to={`/dashboard/mypercel/${d._id}`}>
                                     <button className='btn  bg-[#caeb66] hover:bg-primary'>Pay</button>
+                                   </Link>
                                     <button className='btn mx-2 bg-[#e8f3f4]  '>Edit </button>
                                     <button
                                         onClick={() => handelPercelDelete(d._id)}

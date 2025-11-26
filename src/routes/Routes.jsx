@@ -14,6 +14,7 @@ import UserProfile from '../Home/UserProfile/UserProfile'
 import SendPercel from '../Pages/SendPercel/SendPercel'
 import DashboardLayout from '../layouts/DashboardLayout'
 import Mypercel from '../Pages/Dashboard/MyPercel/Mypercel'
+import Payment from '../Pages/Dashboard/Payment/Payment'
 
 export const router = createBrowserRouter([
 
@@ -54,7 +55,8 @@ export const router = createBrowserRouter([
   </PrivateRoute>,
   children:[
       // {path:'/dashboard' , Component : Mypercel },
-      {path:'/dashboard/mypercel' , Component : Mypercel }
+      {path:'/dashboard/mypercel' , Component : Mypercel },
+     {path:"/dashboard/mypercel/:id", Component: Payment}
   ]
 }
 ])
