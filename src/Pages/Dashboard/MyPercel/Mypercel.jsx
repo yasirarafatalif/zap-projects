@@ -58,7 +58,8 @@ const Mypercel = () => {
         <div>
 
             <div className="overflow-x-auto">
-                <table className="table table-zebra">
+                {
+                    percel.length? <table className="table table-zebra">
                     {/* head */}
                     <thead>
                         <tr>
@@ -66,6 +67,7 @@ const Mypercel = () => {
                             <th>Name</th>
                             <th>Cost</th>
                             <th>Delivery Status</th>
+                            <th>Payment Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -78,12 +80,17 @@ const Mypercel = () => {
                                 <td>{d?.parcelName}</td>
                                 <td>{d?.cost}</td>
                                 <td>pending</td>
+                                <td>
+                                    {
+                                        d?.paymentStatus == 'paid'? "paid" :<Link to={`/dashboard/mypercel/${d._id}`}>
+                                    <button className='btn  bg-[#caeb66] hover:bg-primary'>Pay</button>
+                                   </Link>
+                                    }
+                                </td>
                                 <td >
 
 
-                                   <Link to={`/dashboard/mypercel/${d._id}`}>
-                                    <button className='btn  bg-[#caeb66] hover:bg-primary'>Pay</button>
-                                   </Link>
+                                   
                                     <button className='btn mx-2 bg-[#e8f3f4]  '>Edit </button>
                                     <button
                                         onClick={() => handelPercelDelete(d._id)}
@@ -93,8 +100,11 @@ const Mypercel = () => {
                         }
 
                     </tbody>
-                </table>
+                </table>:    <span>You have dont any percel </span>
+                }
             </div>
+
+        
 
 
         </div>

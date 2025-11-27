@@ -36,6 +36,9 @@ const Navbar = () => {
       <li> <NavLink to='/blog'>Blog</NavLink></li>
       <li> <NavLink to='/send-percel'>Send A Percel</NavLink></li>
       <li> <NavLink to='/contact'>Contact</NavLink></li>
+
+
+
        
       </ul>
     </div>

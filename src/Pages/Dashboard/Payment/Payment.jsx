@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import useAxios from '../../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { data, useParams } from 'react-router';
+;
 
 const Payment = () => {
     const axois = useAxios()
     const {id}=useParams();
-    console.log(id);
-    const {data:percel=[]}= useQuery({
+    // console.log(id);
+    const {data:percel=[],isLoading}= useQuery({
         queryKey: ['percel', id],
         queryFn: async()=>{
             const res = await axois.get(`/percel/${id}`)
@@ -15,7 +16,9 @@ const Payment = () => {
             return res.data;
         }
     })
-   console.log(percel);
+
+  
+  //  console.log(percel);
     const [method, setMethod] = useState("Card");
 
 
@@ -26,6 +29,23 @@ const Payment = () => {
     price: 120,
   };
 
+  // button click
+  const handelPay =async ()=>{
+    const paymentInfo={
+      cost : percel.cost,
+      percelName: percel.parcelName,
+      senderEmail: percel.senderEmail,
+      percelId: percel._id
+    }
+     console.log(paymentInfo);
+    const res= await axois.post('/create-checkout-session', paymentInfo)
+    console.log(res.data);
+    window.location.href= `${res.data.url}`
+   
+
+  }
+
+    
   return (
    <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
   <div className="w-full flex flex-col lg:flex-row gap-6">
@@ -37,6 +57,9 @@ const Payment = () => {
       <p className="text-xl font-semibold mt-3 text-indigo-600">
         Price: ${percel?.cost}
       </p>
+      <button className='btn' 
+      onClick={handelPay}
+      >Pay</button>
     </div>
 
     {/* Payment Section */}
