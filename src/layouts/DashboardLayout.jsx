@@ -5,9 +5,12 @@ import Logo from '../Comeponents/Shared/Logo'
 import { MdDirectionsBike } from "react-icons/md";
 
 import { Box, CreditCard, House, Settings2 } from 'lucide-react';
+import useRole from '../Hooks/useRole';
+import { FaUserMd } from 'react-icons/fa';
 
 
 const DashboardLayout = () => {
+  const { role } = useRole();
 
   return (
     <div className="drawer lg:drawer-open">
@@ -60,15 +63,7 @@ const DashboardLayout = () => {
                 <span className="is-drawer-close:hidden">Settings</span>
               </button>
             </li>
-            {/* Rider Status */}
-            <li>
-              <Link to='/dashboard/rider-status' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Rider Status">
-                {/* Settings icon */}
-                <MdDirectionsBike />
 
-                <span className="is-drawer-close:hidden">Rider Status</span>
-              </Link>
-            </li>
             {/* Mypercel */}
             <li>
               <Link to='/dashboard/mypercel' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Percel">
@@ -79,6 +74,31 @@ const DashboardLayout = () => {
                   My Percel</span>
               </Link>
             </li>
+            {
+              role.role === 'admin' && <>
+                {/* user management */}
+                <li>
+                  <Link to='/dashboard/user-management' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="User Management">
+                    {/* Settings icon */}
+                    <FaUserMd/>
+                    <span className="is-drawer-close:hidden">
+
+                      User Management</span>
+                  </Link>
+                </li>
+
+                {/* Rider Status */}
+                <li>
+                  <Link to='/dashboard/rider-status' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Rider Status">
+                    {/* Settings icon */}
+                    <MdDirectionsBike />
+
+                    <span className="is-drawer-close:hidden">Rider Status</span>
+                  </Link>
+                </li>
+              </>
+            }
+
           </ul>
         </div>
       </div>

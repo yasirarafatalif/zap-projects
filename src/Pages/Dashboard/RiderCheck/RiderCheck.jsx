@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const RiderCheck = () => {
     const axiosSecure = useAxios();
-    const { data: parcel = [] } = useQuery({
+    const { data: parcel = [] , refetch} = useQuery({
         queryKey: ['riders', 'pending'],
         queryFn: async () => {
             const res = await axiosSecure.get('/riders')
@@ -26,6 +26,7 @@ const RiderCheck = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, I Agree"
         }).then((result) => {
+            refetch()
             axiosSecure.patch(`/riders/${id}`, roleUpdate)
                 .then(res => {
                     if (res.data.modifiedCount) {
@@ -58,18 +59,19 @@ const RiderCheck = () => {
         }).then((result) => {
             axiosSecure.delete(`/riders/${id}`)
                 .then(res => {
-                    console.log(res.data);
-                    // if (res.data.modifiedCount) {
-                    //     if (result.isConfirmed) {
-                    //         Swal.fire({
+                    refetch()
+                    // console.log(res.data);
+                    if (res.data.deletedCount) {
+                        if (result.isConfirmed) {
+                            Swal.fire({
 
-                    //             title: "Confirme",
-                    //             text: "We are chcking your detalis",
-                    //             icon: "success"
-                    //         });
-                    //     }
+                                title: "Confirme",
+                                text: "We are delete your request",
+                                icon: "success"
+                            });
+                        }
 
-                    // }
+                    }
 
                 })
         });
@@ -102,10 +104,10 @@ const RiderCheck = () => {
                                     <button className="btn btn-ghost btn-xs">details</button>
                                     <button
                                         onClick={() => handelApprove(d._id)}
-                                        className="btn btn-ghost mx-3 btn-xs">Approve</button>
+                                        className="btn btn-ghost bg-green-300 mx-3 btn-xs">Approve</button>
                                     <button
                                     onClick={()=>handelRejects(d._id)}
-                                    className="btn btn-ghost btn-xs">Rejects</button>
+                                    className="btn btn-ghost bg-red-400 btn-xs">Rejects</button>
 
                                 </td>
 
